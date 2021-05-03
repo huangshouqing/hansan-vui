@@ -1,3 +1,7 @@
+const path = require('path');
+function resolve(dir) {
+  return path.join(__dirname, dir)
+}
 module.exports = {
   // 修改 src 为 examples
   pages: {
@@ -20,16 +24,14 @@ module.exports = {
         // 修改它的选项...
         return options
       })
+      config.resolve.alias
+      .set('@', resolve('packages')) 
   },
-  // configureWebpack: (config) => {
-  //   config.module.rules.push(
-  //   {
-  //     test: /\.vue$/,
-  //     use:'vue-loader'
-  //   },
-  //   {
-  //     test: /\.js$/,
-  //     use: 'bable-loader'
-  //   })
-  // },
+  css: {
+    loaderOptions: {
+      sass: {
+        data: `@import "@/assets/iconfont/index.scss";`
+      }
+    }
+  }
 }

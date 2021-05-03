@@ -1,0 +1,182 @@
+<template>
+  <div :class="[
+      'input',
+      {
+        'have-prefix-icon': prefixIcon,
+        'have-suffix-icon': suffixIcon
+      }
+    ]">
+    <textarea v-if="type === 'textarea'"
+              class="input__textarea-inner c-normal c-size-m"
+              :value="inputValue"
+              v-bind="$attrs"
+              v-on="inputListeners" />
+
+    <template v-else>
+      <hIcon v-if="prefixIcon"
+             class="input__icon"
+             :name="prefixIcon" />
+
+      <slot name="prepend"></slot>
+
+      <input :class="[
+          'input__input-inner',
+          'c-normal',
+          'c-size-m',
+          {
+            'have-prepand': havePrepand,
+            'have-append': haveAppend
+          }
+        ]"
+             :type="type"
+             :value="inputValue"
+             v-bind="$attrs"
+             v-on="inputListeners" />
+
+      <slot name="append"></slot>
+
+      <hIcon v-if="suffixIcon"
+             class="input__icon"
+             :name="suffixIcon" />
+    </template>
+  </div>
+</template>
+
+<script>
+import hIcon from "../icon/index.vue";
+export default {
+  name: "h-input",
+  props: {
+    type: {
+      type: String,
+      default: "text",
+    },
+    value: {
+      type: [String, Number],
+      default: "",
+    },
+    prefixIcon: {
+      type: String,
+    },
+    suffixIcon: {
+      type: String,
+    },
+  },
+  components: {
+    hIcon,
+  },
+  model: {
+    prop: "value",
+    event: "input",
+  },
+  data() {
+    return {
+      inputValue: "",
+    };
+  },
+  computed: {
+    havePrepand() {
+      return this.$slots.prepend;
+    },
+    haveAppend() {
+      return this.$slots.append;
+    },
+    inputListeners() {
+      return Object.assign({}, this.$listeners, {
+        input: (event) => this.$emit("input", event.target.value),
+      });
+    },
+  },
+  watch: {
+    value: {
+      handler(newVal) {
+        this.inputValue = newVal;
+      },
+      immediate: true,
+    },
+  },
+};
+</script>
+
+<style lang="scss">
+.input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 250px;
+
+  .input__icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto auto;
+
+    height: 1em;
+    color: $disabled-color;
+  }
+
+  &.have-prefix-icon {
+    .input__input-inner {
+      padding-left: 24px;
+    }
+
+    .input__icon:first-child {
+      left: 6px;
+    }
+  }
+
+  &.have-suffix-icon {
+    .input__input-inner {
+      padding-right: 24px;
+    }
+
+    .input__icon:last-child {
+      right: 6px;
+    }
+  }
+
+  .input__input-inner,
+  .input__textarea-inner {
+    padding: 0 $m-offset;
+    width: 100%;
+    min-height: 32px;
+    line-height: 32px;
+    box-sizing: border-box;
+    border: 1px solid $main-color;
+    border-radius: $base-radius;
+    color: $font-color;
+    text-overflow: ellipsis;
+    outline: none;
+    transition: all 0.2s;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bolder;
+    &:focus {
+      text-overflow: ellipsis;
+      border: 1px solid $success-color;
+      box-shadow: 0 0 5px 0 rgba($success-color, 0.5);
+    }
+
+    &:disabled {
+      background-color: rgba($disabled-color, 0.25);
+      color: $disabled-color;
+      cursor: not-allowed;
+    }
+
+    &.have-prepand {
+      border-radius: 0 $base-radius $base-radius 0;
+      &.have-append {
+        border-radius: 0 0 0 0;
+      }
+    }
+
+    &.have-append {
+      border-radius: $base-radius 0 0 $base-radius;
+    }
+  }
+
+  .input__textarea-inner {
+    min-height: 2.5em;
+    line-height: 32px;
+  }
+}
+</style>

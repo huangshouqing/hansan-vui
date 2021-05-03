@@ -301,7 +301,7 @@ export default {
       return array;
     },
     // 点击当前行--todo
-    self_clickTableTr(el) {},
+    self_clickTableTr() {},
     //下面都是向外暴露的函数
     //清空所有选中
     com_clearAllselect() {

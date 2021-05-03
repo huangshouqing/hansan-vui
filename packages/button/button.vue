@@ -10,26 +10,14 @@ round 是否圆角
 -->
 
 <template>
-  <div class="button"
-       :disabled="disabled"
-       @click="buttonClick">
+  <div class="button" :disabled="disabled" @click="buttonClick">
     <template v-if="!plain">
-      <button class="btn-normal"
-              :type="type"
-              :disabled="disabled?true:false"
-              :round="round"
-              :size="size"
-              :cirle="cirle">
+      <button class="btn-normal" :type="type" :disabled="disabled?true:false" :round="round" :size="size" :cirle="cirle">
         <slot></slot>
       </button>
     </template>
     <template v-if="plain">
-      <button class="btn-Hollow"
-              :type="type"
-              :disabled="disabled?true:false"
-              :round="round"
-              :size="size"
-              :cirle="cirle">
+      <button class="btn-Hollow" :type="type" :disabled="disabled?true:false" :round="round" :size="size" :cirle="cirle">
         <slot></slot>
       </button>
     </template>
@@ -78,7 +66,7 @@ export default {
       if (this.disabled) {
         el.stopPropagation();
         el.preventDefault();
-        return
+        return;
       }
       this.$emit("click");
     },
@@ -89,7 +77,7 @@ export default {
 .button {
   display: inline-block;
   font-size: 14px;
-  margin: 2px 0px;
+  margin: 20px;
 
   /* 设置禁用状态 */
   &[disabled] {
@@ -268,7 +256,7 @@ export default {
 
   .btn-Hollow[type='warning'] {
     color: #E6A23C;
-    border: 1px solid;
+    border: 1px solid #E6A23C;
   }
 
   .btn-Hollow[type='warning']:hover {

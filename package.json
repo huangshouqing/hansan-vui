@@ -1,6 +1,6 @@
 {
   "name": "hansan-vui",
-  "version": "0.0.1-alpha.21",
+  "version": "0.0.1-alpha.23",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -19,7 +19,10 @@
     "echarts": "^4.9.0",
     "element-ui": "2.13.2",
     "lodash": "^4.17.20",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "material-design-icons": "^3.0.1",
+    "material-design-icons-iconfont": "^v6.1.0",
+    "reset-css": "^4.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
